@@ -17,15 +17,9 @@ public class QuickViewPage extends Page {
 
     @Override
     protected void setupElementLocators() {
-        elementLocators.put(ADD_TO_CART, By.className("exclusive"));
         elementLocators.put(NAME, By.xpath("//h1[@itemprop='name']"));
         elementLocators.put(QUANTITY_WANTED, By.id("quantity_wanted"));
         elementLocators.put(PRICE, By.id("our_price_display"));
-    }
-
-    public void addToCart(){
-        findElementBy(elementLocators.get(ADD_TO_CART)).click();
-        NavigateGlobalPages.handleAddToCartResponse(driver, true);
     }
 
     public String getName(){

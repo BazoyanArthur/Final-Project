@@ -24,15 +24,24 @@ public class SearchResultPage extends Page {
 
     }
 
-    public List<Product> getProductList(){
+    public List<WebElement> getProductContainerList(){
         driver.findElement(By.id("list")).click();
         new WebDriverWait(driver, 20).until(
                 webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
         List<WebElement> listElements = driver.findElements(By.xpath(".//ul[@class='product_list row list']/li"));
+        List<WebElement> listContainers = new ArrayList<>();
+        for(WebElement webElement : listElements){
+            listContainers.add(webElement.findElement(By.xpath("./div[@class='product-container']")));
+        }
+        return listContainers;
+    }
+
+    public List<Product> getProductList(){
+        List<WebElement> listElements = getProductContainerList();
         List<Product> products = new ArrayList<>();
 
         for(WebElement element : listElements){
-            products.add(getProductInfo(element.findElement(By.className("product-container"))));
+            products.add(getProductInfo(element));
         }
         return products;
     }
